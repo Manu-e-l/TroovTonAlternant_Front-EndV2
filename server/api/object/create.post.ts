@@ -5,7 +5,7 @@ export default defineEventHandler(async (event) => {
     // Obtenir data depuis  body
     const body = await useBody(event);
 
-    // validité  (erreur renvoyé )
+    // validité du schéma mep par Joi
     const { error } = ObjectSchema.validate(body);
     if (error) {
         throw createError({

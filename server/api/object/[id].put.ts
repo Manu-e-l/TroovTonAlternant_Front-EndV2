@@ -5,9 +5,10 @@ export default defineEventHandler(async (event) => {
     // Obtenir data depuis body
     const body = await useBody(event);
 
+    // Obtention id (simi req.params.id)
     const id = event.context.params.id;
 
-    // validité  (erreur renvoyé )
+    // validité du schéma mep par Joi 
     const { error } = ObjectSchema.validate(body, { abortEarly: true, allowUnknown: true });
     if (error) {
         throw createError({

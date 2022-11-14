@@ -1,3 +1,5 @@
+import ObjectModel from "~~/models/Object.model";
+
 export default defineEventHandler(async (event) => {
-    return "Hello from Object";
+    return await ObjectModel.find().populate("user");
 });
