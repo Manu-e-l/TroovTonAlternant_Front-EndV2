@@ -19,6 +19,7 @@ module.exports = {
                     DEFAULT: colors.orange[500],
                     ...colors.orange,
                 },
+                "troov-blue":"#c8edfd" 
             },
         },
     },
