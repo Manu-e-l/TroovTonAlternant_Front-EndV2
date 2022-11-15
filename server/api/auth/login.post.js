@@ -1,8 +1,13 @@
 import { getUserByUsername } from "~~/server/db/users";
 import bcrypt from "bcrypt";
-import { generateTokens } from "~~/utils/jwt";
+import { generateTokens, sendRefreshToken } from "~~/utils/jwt";
+import { createRefreshToken } from "~~/server/db/refreshTokens";
+import { userTransformer } from "~~/server/transformers/user";
+import { sendError } from "h3";
+
 
 export default defineEventHandler(async (event) => {
+    
     const body = await useBody(event);
 
     const {username, password} = body;
@@ -27,14 +32,29 @@ export default defineEventHandler(async (event) => {
     // Comparer password
     const verifPassword = await bcrypt.compare(password, user.password);
 
-    if
+    if (!verifPassword){
+        return sendError(event, createError({
+            statusCode:400,
+            statusMessage: "Pseudo ou mot de passe incorrect"
+        }));
 
+    }
 
-    // 
-    const {accesToken, refreshToken} = generateTokens()
+    // création 2 Tokens (Acces et refresh) 
+    const {accesToken, refreshToken} = generateTokens(user);
+
+    // Save dans db
+    await createRefreshToken({
+        token: refreshToken,
+        userId: user.id
+    });
+
+    //  Add http only dans un cookie
+    sendRefreshToken(event, refreshToken);
 
     return {
-        user: user,
-        verifPassword
+        acces_Token: accesToken,
+        user: userTransformer(user),
+       
     };
 });
