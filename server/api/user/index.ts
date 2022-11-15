@@ -1,0 +1,5 @@
+import UserModel from "~~/models/User.model";
+
+export default defineEventHandler(async (event) => {
+    return await UserModel.find();
+});
