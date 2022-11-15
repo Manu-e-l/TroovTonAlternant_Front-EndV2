@@ -9,11 +9,13 @@ export default defineNuxtConfig({
         },
     },
     runtimeConfig: {
-        MONGO_URI: process.env.MONGO_URI
+        jwtAccesSecret: process.env.JWT_ACCES_TOKEN_SECRET,
+        jwtRefreshSecret: process.env.JWT_REFRESH_TOKEN_SECRET    
+    // MONGO_URI: process.env.MONGO_URI
     },
     // register nitro plugin
     nitro: {
-        plugins: ["@/server/db/index.ts"],
+       
     },
     /// transpile  afew packages
     build: {
