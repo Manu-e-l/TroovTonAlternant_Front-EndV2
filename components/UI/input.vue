@@ -6,7 +6,7 @@
         
         <div class="mt-1">
             <input  :value="props.modelValue" 
-            @input="event => emits('update:modelValue', event.targuet.value)"
+            @input="event => emits('update:modelValue', event.target.value)"
                 class="block px-4
                 w-full border-gray-300 rounded-full shadow-sm 
                 focus:ring-blue-200 focus:border-blue-200 sm:text-sm"

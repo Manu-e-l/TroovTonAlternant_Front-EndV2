@@ -16,12 +16,29 @@
 </template>
 
 <script setup >
+
 const data = reactive({
     username:"",
-    password:""
+    password:"",
+    loading: false 
 });
 
-function handleLogin() {
-    alert(JSON.stringify(data))
+async function handleLogin() {
+    
+    const  { login }  = useAuth()
+    
+    data.loading = true
+    try {
+        await login({
+            username: data.username,
+            password: data.password
+        })
+    
+   } catch (error) {
+    console.log(error)
+    
+   } finally {
+     data.loading = false
+   }
 };
 </script>
