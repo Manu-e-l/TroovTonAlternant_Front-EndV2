@@ -8,7 +8,7 @@ export default defineEventHandler(async (event) => {
     // Obtention id (simi req.params.id)
     const id = event.context.params.id;
 
-    // validité du schéma mep par Joi 
+    // validité du schéma mise en place par Joi 
     const { error } = ObjectSchema.validate(body, { abortEarly: true, allowUnknown: true });
     if (error) {
         throw createError({

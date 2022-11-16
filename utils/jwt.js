@@ -1,8 +1,8 @@
 import jwt from "jsonwebtoken";
 
 const generateAccesToken =  (user) => {
-    
     const config = useRuntimeConfig();
+    
     return jwt.sign({userId: user.id}, config.jwtAccesSecret,{
         expiresIn: "10m"
     });
@@ -10,9 +10,30 @@ const generateAccesToken =  (user) => {
 
 const generateRefreshToken =  (user) => {
     const config = useRuntimeConfig();
+    
     return jwt.sign({userId: user.id}, config.jwtRefreshSecret,{
         expiresIn: "3h"
     });
+};
+
+export const decodeRefreshToken = (token) => {
+    const config = useRuntimeConfig();
+    
+    try {
+        return jwt.verify(token, config.jwtRefreshSecret);
+    } catch (error) {
+        return null;
+    }
+};
+
+export const decodeAccesToken = (token) => {
+    const config = useRuntimeConfig();
+    
+    try {
+        return jwt.verify(token, config.jwtAccesSecret);
+    } catch (error) {
+        return null;
+    }
 };
 
 export const generateTokens = (user) => {
