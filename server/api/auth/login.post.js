@@ -43,7 +43,7 @@ export default defineEventHandler(async (event) => {
     // création 2 Tokens (Acces et refresh) 
     const {accesToken, refreshToken} = generateTokens(user);
 
-    // Save dans db
+    // Save RefreshToken  dans la db
     await createRefreshToken({
         token: refreshToken,
         userId: user.id
